@@ -1,6 +1,6 @@
 # Attendbot 🤖
 
-![Attendbot Logo](https://via.placeholder.com/150)
+<!-- ![Attendbot Logo](https://via.placeholder.com/150) -->
 
 ---
 
