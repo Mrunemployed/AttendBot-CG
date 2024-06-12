@@ -37,19 +37,19 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 >If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
 
 
-#### Not sure whether you have python?
+> [!TIP] 
+> ##### Not sure whether you have python?
+> Perform the following steps.
 
 Run the following command:
 
 ```
-
 py --version
 
 ```
 ***or***
 
 ```
-
 python --version
 
 ```
@@ -57,9 +57,7 @@ python --version
 ***Should return a response like -***
 
 ```
-
 Python 3.11.4
-
 ```
 
 
