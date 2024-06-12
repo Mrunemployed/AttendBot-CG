@@ -33,7 +33,43 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 ### Requirements
 - Python 3.10 or higher
 
+> If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
+
+#### Not sure whether you have python?
+
+- Run the following command:
+
+```
+
+py --version
+
+```
+***or***
+
+```
+
+python --version
+
+```
+
+***Should return a response like -***
+
+```
+
+Python 3.11.4
+
+```
+
+
 ### Instructions
+
+---
+
+**Note:** 
+You need to have python already installed in order to use this bot.
+---
+
+
 1. Open Command Prompt.
 2. Navigate to the directory containing the Attendbot package.
 3. Run the following command to install Attendbot:
@@ -51,8 +87,7 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 
 ### Running the Program
 1. Open Command Prompt.
-2. Navigate to the directory containing the Attendbot package.
-3. Run the following command to mark attendance for the previous month:
+2. Run the following command to mark attendance for the previous month:
    
     ```bash
 
@@ -70,13 +105,36 @@ py -m Attendbot.mark -i
 
 ```
 
+
 ### Specifying Month
 To specify the month for which attendance needs to be applied, use the -m flag followed by the month value (integer):
 ```
+
 py -m Attendbot.mark -m6
 
+
 ```
+
+Alternatively,
+
+```
+
+py -m Attendbot.mark -m 6
+
+
+```
+
 This command will mark attendance for June.
+
+Or, you can use both the flags in conjunction:
+
+```
+
+py -m Attendbot.mark -m 6 -i
+
+```
+
+This will run the bot in Interactive mode and tell it to mark attendence for the month of June.
 
 ### Contribution
 
