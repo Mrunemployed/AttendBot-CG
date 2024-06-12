@@ -30,35 +30,37 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 
 ## Installation (Windows)
 
+> [!NOTE]
+> If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
+
+
+---
+
 ### Requirements
 - Python 3.10 or higher
-
-> [!NOTE]
->If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
 
 
 > [!TIP] 
 > ##### Not sure whether you have python?
 > Perform the following steps.
 
-Run the following command:
 
-```
-py --version
+>```
+>py --version
 
-```
-***or***
+>```
+>***or***
 
-```
-python --version
+>```
+>python --version
 
-```
+>```
 
-***Should return a response like -***
+>***Should return a response like -***
 
-```
-Python 3.11.4
-```
+>```
+>Python 3.11.4
+>```
 
 
 ### Instructions
