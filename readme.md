@@ -45,22 +45,22 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 > Perform the following steps.
 
 
->```
->py --version
+```
+py --version
 
->```
->***or***
+```
+> or
 
->```
->python --version
+```
+python --version
 
->```
+```
 
->***Should return a response like -***
+> Should return a response like:
 
->```
->Python 3.11.4
->```
+```
+Python 3.11.4
+```
 
 
 ### Instructions
