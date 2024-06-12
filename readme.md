@@ -49,14 +49,14 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 py --version
 
 ```
-> or
+ or
 
 ```
 python --version
 
 ```
 
-> Should return a response like:
+ Should return a response like:
 
 ```
 Python 3.11.4
