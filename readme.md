@@ -76,7 +76,7 @@ Python 3.11.4
     
     ```bash
 
-    py -m pip install Attendbot
+    py -m pip install .
     
     
     ```
