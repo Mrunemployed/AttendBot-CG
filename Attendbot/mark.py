@@ -141,8 +141,8 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"li#liattendance")))
             self.driver.find_element(By.CSS_SELECTOR,"li#liattendance").click()
             self.driver.find_element(By.XPATH,"//ul/li[@id='liattendance']/ul[@class='dropdown-menu']/li/a").click()
-            WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//ul/li/a[@id='self-attendance']")))
-            self.driver.find_element(By.XPATH,"//ul/li/a[@id='self-attendance']").click()
+            WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//a[@id='self-attendance']")))
+            self.driver.find_element(By.XPATH,"//a[@id='self-attendance']").click()
             log.info(f"Scraper has successfully performed the task attendence.goto_shiftallowance_page")
             print("Scraper has successfully performed the task attendence.goto_shiftallowance_page")
             return True
