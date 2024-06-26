@@ -51,6 +51,8 @@ class updates():
             logging.info("Pulled changes from repo.")
             print("new updates found!")
             updated = True
+        else:
+            print("no new updates found. Proceeding....")
         return updated
         
     
