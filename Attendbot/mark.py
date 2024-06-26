@@ -13,8 +13,10 @@ from . import DataIn
 # import DataIn
 import logging
 import sys
+import subprocess
 import os
 import re
+import git
 
 
 path = os.path.abspath(os.path.dirname(__file__))
@@ -32,7 +34,47 @@ logging.basicConfig(filename=f'{logs_dir}\\{datetime.datetime.strftime(datetime.
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
+class updates():
+    def __init__(self) -> None:
+        self.ginit = git.Repo(os.path.dirname(__file__))
+    
+    def pull_this(self):
+        updated = False
+        current = self.ginit.head.commit
+        self.ginit.remotes.origin.pull()
+        if current != self.ginit.head.commit:
+            updated = True
+        return updated
+        
+    
+    def update(self,name):
+        try:
+                
+            uninstall = subprocess.call([sys.executable, '-m', 'pip', 'uninstall', name])
+            if uninstall == 1:
+                logging.info(f"Failed to uninstall {name}....")
+                print(f"Failed to uninstall {name}, this may happen if your Python is not installed on PATH")
+                print("Please uninstall the package and reinstall manually")
+                return False
+            else:
+                logging.info(f"uninstalled {name}....")
+                path = os.path.abspath(os.path.dirname(__file__))
+                path = os.path.join(path,"..")
+                os.chdir(path=path)
+                install = subprocess.call([sys.executable, '-m', 'pip', 'install', '.'])
+                if install == 1:
+                    logging.info(f"Failed to install {name}....")
+                    print(f"Failed to install {name}, this may happen if your Python is not installed on PATH")
+                    print("Please install the package and reinstall manually")
+                    return False
+                else:
+                    return True
 
+        except Exception as err:
+            logging.error(err)
+            return False
+        
+    
 class attendence(DataIn.Bribe):
 
     def __init__(self,**kwargs) -> None:
@@ -130,9 +172,9 @@ class attendence(DataIn.Bribe):
             self.driver.find_element(By.XPATH,"//ul/li/a[@title='India Application Portal']").click()
             # time.sleep(5)
             self.driver.switch_to.window(self.driver.window_handles[-1])
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH,"//ul/li[@aria-haspopup='Menu_CAP:submenu:34']")))
+            WebDriverWait(self.driver,10).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
             ac = ActionChains(self.driver)
-            menu = self.driver.find_element(By.XPATH,"//ul/li[@aria-haspopup='Menu_CAP:submenu:34']")
+            menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")[3]
             ac.move_to_element(menu).perform()
             shift_option = self.driver.find_element(By.XPATH,"//ul/li/a[starts-with(@href,'https://shift')]")
             ac.move_to_element(shift_option).click().perform()
@@ -341,4 +383,8 @@ def main():
         log.error("Closing the program because of error")
 
 if __name__=='__main__':
+    refresh = updates()
+    check = refresh.pull_this()
+    if check:
+        update = refresh.update('Attendbot')
     main()

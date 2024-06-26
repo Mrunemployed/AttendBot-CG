@@ -10,7 +10,8 @@ setup(
         'pandas',
         'selenium',
         'bs4',
-        'logging'
+        'logging',
+        'gitpython'
     ],
     entry_points={
         'console_scripts':[
