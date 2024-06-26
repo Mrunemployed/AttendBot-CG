@@ -11,7 +11,8 @@ setup(
         'selenium',
         'bs4',
         'logging',
-        'gitpython'
+        'gitpython',
+        'lxml'
     ],
     entry_points={
         'console_scripts':[
