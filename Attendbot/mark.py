@@ -39,40 +39,41 @@ class updates():
         path = os.path.abspath(os.path.dirname(__file__))
         path = os.path.join(path,"..")
         self.ginit = git.Repo(path)
-        logging.info("Initialized repo. Prodceeding....")
+        log.info("Initialized repo. Prodceeding....")
         print("Initialized Repo executing...")
     
     def pull_this(self):
         updated = False
         current = self.ginit.head.commit
         self.ginit.remotes.origin.pull()
-        logging.info("Attempting pull from repo...")
+        log.info("Attempting pull from repo...")
         if current != self.ginit.head.commit:
-            logging.info("Pulled changes from repo.")
+            log.info("Pulled changes from repo.")
             print("new updates found!")
             updated = True
         else:
+            log.info("No new updates detected. Proceeding...")
             print("no new updates found. Proceeding....")
         return updated
         
     
     def update(self,name):
         try:
-            logging.info("At method: update. Attempting to update existing package")
+            log.info("At method: update. Attempting to update existing package")
             uninstall = subprocess.call([sys.executable, '-m', 'pip', 'uninstall', name])
             if uninstall == 1:
-                logging.info(f"Failed to uninstall {name}....")
+                log.info(f"Failed to uninstall {name}....")
                 print(f"Failed to uninstall {name}, this may happen if your Python is not installed on PATH")
                 print("Please uninstall the package and reinstall manually")
                 return False
             else:
-                logging.info(f"uninstalled {name}....")
+                log.info(f"uninstalled {name}....")
                 path = os.path.abspath(os.path.dirname(__file__))
                 path = os.path.join(path,"..")
                 os.chdir(path=path)
                 install = subprocess.call([sys.executable, '-m', 'pip', 'install', '.'])
                 if install == 1:
-                    logging.info(f"Failed to install {name}....")
+                    log.info(f"Failed to install {name}....")
                     print(f"Failed to install {name}, this may happen if your Python is not installed on PATH")
                     print("Please install the package and reinstall manually")
                     return False
@@ -80,7 +81,7 @@ class updates():
                     return True
 
         except Exception as err:
-            logging.error(err)
+            log.error(err)
             return False
         
     
@@ -89,11 +90,30 @@ class attendence(DataIn.Bribe):
     def __init__(self,**kwargs) -> None:
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--start-maximized")
+        print(kwargs)
         if len(kwargs.keys()) > 0:
+        
             if "mode" in kwargs.keys() and "month" in kwargs.keys():
                 self.month = kwargs["month"]
+                print("Interactive mode selected.. \nNow displaying...")
+                log.info("Detected Interactive mode, Bot will now show the execution window.")
+                log.info(f"Applying attendence for month: {self.month}")
+                print(f"Bot will now apply attendence for month: {self.month}")
+
             elif "month" in kwargs.keys():
                 self.month = kwargs["month"]
+                log.info(f"Bot will now attendence for month: {self.month}")
+                print(f"Bot will now apply attendence for month: {self.month}")
+                log.info("User has chosen to proceed with headless mode")
+                print("Proceeding with headless mode...")
+                self.options.add_argument("--headless=old")
+
+            elif "mode" in kwargs.keys():
+                self.month = datetime.datetime.now().month-1
+                print("Interactive mode selected.. \nNow displaying...")
+                print(f"Month not specified by the user. Assuming previous month: {self.month} by default")
+                log.info(f"Month not specified by the user. Assuming previous month: {self.month} by default")
+            
             else:
                 log.info("User has chosen to proceed with headless mode")
                 print("Proceeding with headless mode...")
@@ -352,30 +372,47 @@ class attendence(DataIn.Bribe):
         
     
 def main(cmdargs:list):
+    print("cmdargs from main: ",cmdargs,len(cmdargs))
+
     if len(cmdargs) > 1:
-        if '-i' in cmdargs:
-            if '-m' in cmdargs:
-                indx = cmdargs.index('-m')
-                if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
-                    att = attendence(mode="show",month=int(cmdargs[indx+1]))
-                else:
-                    log.error("Month value not entered")
-                    print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
-                    att = attendence(mode="show")
+        print("Flags entered: ",cmdargs,len(cmdargs))
+
+        if '-i' in cmdargs and '-m' in cmdargs:
+            print("interactive with month specified")
+
+            if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
+                print("checking for date -m<month>")
+                att = attendence(mode="show",month=int(cmdargs[indx+1]))
+
             else:
+                print("month data not found in -m")
+                log.error("Month value not entered")
+                print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
                 att = attendence(mode="show")
-        else:
-            if '-m' in cmdargs:
-                indx = cmdargs.index('-m')
-                if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
-                    att = attendence(month=int(cmdargs[indx+1]))
-                else:
-                    log.error("Month value not entered")
-                    print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
-                    att = attendence()
+
+        elif '-i' in cmdargs:
+            exp = re.compile('^.[a-z][0-9]{2}$|^.[a-z][0-9]{1}$')
+            repeat_check = [x for x in cmdargs if re.search(exp,x)]
+            if len(repeat_check) == 1:
+                month = repeat_check[0].split('-m')[1]
+                att = attendence(mode="show",month=int(month))
             else:
-                log.info("No Flags entered")
+                print("please enter the flags like so: \n py -m Attendbot.mark -m 8 -<ADDITional Flag> \n ")
+                att = attendence(mode="show")                
+
+        elif '-m' in cmdargs:
+            indx = cmdargs.index('-m')
+            if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
+                print("checking for date -m<month>")
+                att = attendence(month=int(cmdargs[indx+1]))
+
+            else:
+                print("month data not found in -m")
+                log.error("Month value not entered")
+                print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
                 att = attendence()
+        else:
+            print("Operation no supported. \n Enter flag like: \n py -m Attendbot.mark -m 8 -<ADDITional Flag>")
     else:
         att = attendence()
 
@@ -391,10 +428,12 @@ def main(cmdargs:list):
         log.setLevel(logging.INFO)
         log.error("Closing the program because of error")
 
+
 if __name__=='__main__':
     cmdargs = sys.argv
     refresh = updates()
     check = refresh.pull_this()
     if check:
         update = refresh.update('Attendbot')
+    print(cmdargs)
     main(cmdargs)
