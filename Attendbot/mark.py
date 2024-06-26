@@ -9,8 +9,8 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 import pandas as pd
-# from . import DataIn
-import DataIn
+from . import DataIn
+# import DataIn
 import logging
 import sys
 import subprocess
@@ -36,20 +36,27 @@ log.setLevel(logging.INFO)
 
 class updates():
     def __init__(self) -> None:
-        self.ginit = git.Repo(os.path.dirname(__file__))
+        path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(path,"..")
+        self.ginit = git.Repo(path)
+        logging.info("Initialized repo. Prodceeding....")
+        print("Initialized Repo executing...")
     
     def pull_this(self):
         updated = False
         current = self.ginit.head.commit
         self.ginit.remotes.origin.pull()
+        logging.info("Attempting pull from repo...")
         if current != self.ginit.head.commit:
+            logging.info("Pulled changes from repo.")
+            print("new updates found!")
             updated = True
         return updated
         
     
     def update(self,name):
         try:
-                
+            logging.info("At method: update. Attempting to update existing package")
             uninstall = subprocess.call([sys.executable, '-m', 'pip', 'uninstall', name])
             if uninstall == 1:
                 logging.info(f"Failed to uninstall {name}....")
