@@ -351,13 +351,13 @@ class attendence(DataIn.Bribe):
             return "Failed"
         
     
-def main():
-    if len(sys.argv) > 1:
-        if '-i' in sys.argv:
-            if '-m' in sys.argv:
-                indx = sys.argv.index('-m')
-                if len(sys.argv) >= indx+1 and re.search("[0-9]",str(sys.argv)) != None:
-                    att = attendence(mode="show",month=int(sys.argv[indx+1]))
+def main(cmdargs:list):
+    if len(cmdargs) > 1:
+        if '-i' in cmdargs:
+            if '-m' in cmdargs:
+                indx = cmdargs.index('-m')
+                if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
+                    att = attendence(mode="show",month=int(cmdargs[indx+1]))
                 else:
                     log.error("Month value not entered")
                     print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
@@ -365,10 +365,10 @@ def main():
             else:
                 att = attendence(mode="show")
         else:
-            if '-m' in sys.argv:
-                indx = sys.argv.index('-m')
-                if len(sys.argv) >= indx+1 and re.search("[0-9]",str(sys.argv)) != None:
-                    att = attendence(month=int(sys.argv[indx+1]))
+            if '-m' in cmdargs:
+                indx = cmdargs.index('-m')
+                if len(cmdargs) >= indx+1 and re.search("[0-9]",str(cmdargs)) != None:
+                    att = attendence(month=int(cmdargs[indx+1]))
                 else:
                     log.error("Month value not entered")
                     print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
@@ -392,8 +392,9 @@ def main():
         log.error("Closing the program because of error")
 
 if __name__=='__main__':
+    cmdargs = sys.argv
     refresh = updates()
     check = refresh.pull_this()
     if check:
         update = refresh.update('Attendbot')
-    main()
+    main(cmdargs)
