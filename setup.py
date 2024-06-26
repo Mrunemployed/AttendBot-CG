@@ -2,7 +2,7 @@ from setuptools import setup,find_packages
 
 setup(
     name='Attendbot',
-    version='1.3',
+    version='1.5',
     author='Rudradip Khan',
     description='A bot that uses Beautiful Soup along with Selenium to effortlessly put your shift claim manual attendence in the Capgemini portal',
     packages=find_packages(),

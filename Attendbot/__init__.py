@@ -1,5 +1,5 @@
 from .mark import attendence
 from .DataIn import Bribe
-__version__ = '1.0'
+__version__ = '1.5'
 
 print("initalizing...")
