@@ -415,10 +415,10 @@ class attendence(DataIn.Bribe):
         
     
 def main(cmdargs:list):
-    print("cmdargs from main: ",cmdargs,len(cmdargs))
+    # print("cmdargs from main: ",cmdargs,len(cmdargs))
 
     if len(cmdargs) > 1:
-        print("Flags entered: ",cmdargs,len(cmdargs))
+        # print("Flags entered: ",cmdargs,len(cmdargs))
 
         if '-i' in cmdargs and '-m' in cmdargs:
             print("interactive with month specified")
