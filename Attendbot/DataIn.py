@@ -18,10 +18,10 @@ class Bribe():
                         df.loc[i,"Mode"] = "ignore"
                     elif j["Attendance status"] == "PendingApproval":
                         df.loc[i,"Mode"] = "ignore"
-                    elif not pd.isnull(j["Date"]) and datetime.datetime.strptime(j["Date"],"%d-%b-%y").month > datetime.datetime.now().month:
+                    # elif not pd.isnull(j["Date"]) and datetime.datetime.strptime(j["Date"],"%d-%b-%y").month > datetime.datetime.now().month:
                     #type(df.loc[i,"Date"])!= float:
                         # if datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= datetime.datetime.now():
-                        df.loc[i,"Mode"] = "ignore"
+                        # df.loc[i,"Mode"] = "ignore"
                     else:
                         in_time = j["In Time"]
                         out_time = j["Out Time"]
@@ -31,6 +31,8 @@ class Bribe():
                         else:
                             diff = datetime.datetime.strptime(out_time,"%H:%M") - datetime.datetime.strptime(in_time,"%H:%M")
                             if int(in_time[:2]) == 0 and int(out_time[:2]) == 0:
+                                if j["Rostered shift"] in ["F3"]:
+                                    df.loc[i,"Mode"] = "Morning Shift"
                                 df.loc[i,"Mode"] = "Manual Swipe Attendence"
                             elif int(in_time[:2]) != 0 and int(out_time[:2]) != 0 and diff < datetime.timedelta(hours=8):
                                 df.loc[i,"Mode"] = "Swipe Adjustment"
@@ -42,6 +44,7 @@ class Bribe():
             return df
         except Exception as e:
             return str(e)
+
 
 # df = pd.read_csv("sample.csv")
 # br = Bribe()

@@ -308,6 +308,13 @@ class attendence(DataIn.Bribe):
             log.error(f"Encountered error at attendence.scrape_attendence -> {e}")
             return False
 
+    def cleanup(self,path_to_df):
+        if path_to_df:
+            os.remove(path_to_df)
+        else:
+            print("Nothing to cleanup")
+
+
     def identify_changes(self):
         att_report = os.listdir(current_attendance)
         make_df = self.manipulate(os.path.join(current_attendance,att_report[0]))
@@ -334,7 +341,8 @@ class attendence(DataIn.Bribe):
                         
                     else:
                         log.error(f"Encountered error at DataIn.Bribe.identify_changes  -> \\n {make_df}")
-            make_df.to_csv(f"{current_attendance}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
+            make_df.to_csv(f"{completed}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
+            self.cleanup(os.path.join(current_attendance,att_report[0]))
         else:
             log.setLevel(logging.ERROR)
             log.error(f"Encountered error at DataIn.Bribe.manipulate -> {make_df}")
