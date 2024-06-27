@@ -9,8 +9,8 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 import pandas as pd
-from . import DataIn
-# import DataIn
+# from . import DataIn
+import DataIn
 import logging
 import sys
 import subprocess
@@ -246,7 +246,7 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,30).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
             ac = ActionChains(self.driver)
             menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")
-            menu_idx = menu.index([x for x in menu if re.search("finance",x,re.IGNORECASE)][0])
+            menu_idx = menu.index([x for x in menu if re.search("finance",x.text,re.IGNORECASE)][0])
             ac.move_to_element(menu[menu_idx]).perform()
             shift_option = self.driver.find_element(By.XPATH,"//ul/li/a[starts-with(@href,'https://shift')]")
             ac.move_to_element(shift_option).click().perform()
@@ -478,5 +478,12 @@ if __name__=='__main__':
     check = refresh.pull_this()
     if check:
         update = refresh.update('Attendbot')
-    print(cmdargs)
-    main(cmdargs)
+        print(cmdargs)
+        if update:
+            print("*"*20)
+            print("The bot has just been updated")
+            print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
+        else:
+            main(cmdargs)
+    
+ 
