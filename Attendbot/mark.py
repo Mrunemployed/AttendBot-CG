@@ -278,7 +278,7 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//table/tbody/tr/td/div[@class='EmployeeID']")))
             soup = BeautifulSoup(self.driver.page_source,"html.parser")
             table = soup.find("table",{"id":"Table_report"})
-            df_table = pd.read_html(str(table))
+            df_table = pd.read_html(str(table),skiprows=1)
             log.info(df_table)
             df = df_table[0]
             self.df = df
