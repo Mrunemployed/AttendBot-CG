@@ -11,7 +11,7 @@ class Bribe():
     def manipulate(self,df:pd.DataFrame):
         try:
             for i,j in df.iterrows():
-                if df.loc[i,"Rostered shift"] == "PH" | df.loc[i,"Rostered shift"] == "WO" | df.loc[i,"Attended shift"] == "Leave":
+                if (df.loc[i,"Rostered shift"] == "PH") | (df.loc[i,"Rostered shift"] == "WO") | (df.loc[i,"Attended shift"] == "Leave"):
                     df.loc[i,"Mode"] = "ignore"
                 elif df.loc[i,"Attendance status"] == "PendingApproval":
                     df.loc[i,"Mode"] = "ignore"

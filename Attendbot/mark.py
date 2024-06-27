@@ -281,6 +281,7 @@ class attendence(DataIn.Bribe):
             df_table = pd.read_html(str(table))
             df = df_table[0]
             self.df = df
+            log.info(df)
             df.to_csv(f"{reports_dir}\\{self.month}-source-attendence-data.xlsx",index=False)
             log.info(f"Scraper has successfully performed the task attendence.scrape_attendence")
             print("Scraper has successfully performed the task attendence.scrape_attendence")
