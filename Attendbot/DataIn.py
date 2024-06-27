@@ -2,15 +2,16 @@ from typing import Any
 import pandas as pd
 from datetime import datetime
 import datetime
+import os
 
 class Bribe():
 
     def __init__(self) -> None:
         pass
     
-    def manipulate(self,df:pd.DataFrame):
+    def manipulate(self,df_path:os.PathLike):
         try:
-            
+            df = pd.read_csv(df_path)
             for i,j in df.iterrows():
                 if pd.notna(j["Attendance shift"]) and pd.notna(j["Rostered shift"]):
                     if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
@@ -36,6 +37,7 @@ class Bribe():
                             else:
                                 df.loc[i,"Mode"] = "ignore"
                 else:
+
                     df.fillna("NoValue",inplace=True)
             return df
         except Exception as e:

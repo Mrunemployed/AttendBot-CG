@@ -25,10 +25,17 @@ if not os.path.exists(logs_dir):
     os.mkdir(logs_dir)
 print("Find logs at:",logs_dir)
 path_reports = os.path.abspath(os.path.dirname(__file__))
-reports_dir = os.path.join(path_reports,"reports")
-if not os.path.exists(reports_dir):
-    os.mkdir(reports_dir)
-print("Find attendance reports at:",reports_dir)
+current_attendance = os.path.join(path_reports,"current_attendance")
+if not os.path.exists(current_attendance):
+    os.mkdir(current_attendance)
+# print("Find attendance reports at:",current_attendance)
+
+path_completed = os.path.abspath(os.path.dirname(__file__))
+completed = os.path.join(path_reports,"completed")
+if not os.path.exists(current_attendance):
+    os.mkdir(current_attendance)
+print("Find attendance reports at:",completed)
+
 
 logging.basicConfig(filename=f'{logs_dir}\\{datetime.datetime.strftime(datetime.datetime.today(),"%Y-%m-%d")}.log',format='%(asctime)s %(message)s',filemode='a')
 log = logging.getLogger()
@@ -276,7 +283,7 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//select[@id='e1']")))
             self.driver.find_element(By.XPATH,f"//select[@id='e1']/option[@value={self.month}]").click()
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//table/tbody/tr/td/div[@class='EmployeeID']")))
-            time.sleep(10)
+            # time.sleep(10)
             print("bot is reading the Attendence data...")
             animation = "|/-\\"
             idx = 0
@@ -292,7 +299,7 @@ class attendence(DataIn.Bribe):
             self.df = df
             log.info(df.columns)
             # log.info(df["Rostered shift"])
-            df.to_csv(f"{reports_dir}\\{self.month}-source-attendence-data.csv",index=False)
+            df.to_csv(f"{current_attendance}\\{self.month}-source-attendence-data.csv",index=False)
             log.info(f"Scraper has successfully performed the task attendence.scrape_attendence")
             print("Scraper has successfully performed the task attendence.scrape_attendence")
             return True
@@ -302,7 +309,8 @@ class attendence(DataIn.Bribe):
             return False
 
     def identify_changes(self):
-        make_df = self.manipulate(self.df)
+        att_report = os.listdir(current_attendance)
+        make_df = self.manipulate(os.path.abspath(att_report[0]))
         print(make_df)
         if isinstance(make_df,pd.DataFrame):
             shrink_df = make_df[make_df.Mode != "NoValue"]
@@ -326,7 +334,7 @@ class attendence(DataIn.Bribe):
                         
                     else:
                         log.error(f"Encountered error at DataIn.Bribe.identify_changes  -> \\n {make_df}")
-            make_df.to_csv(f"{reports_dir}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
+            make_df.to_csv(f"{current_attendance}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
         else:
             log.setLevel(logging.ERROR)
             log.error(f"Encountered error at DataIn.Bribe.manipulate -> {make_df}")
