@@ -9,8 +9,8 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 import pandas as pd
-# from . import DataIn
-import DataIn
+from . import DataIn
+# import DataIn
 import logging
 import sys
 import subprocess
