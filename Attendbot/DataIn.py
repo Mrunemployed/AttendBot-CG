@@ -31,11 +31,21 @@ class Bribe():
                         else:
                             diff = datetime.datetime.strptime(out_time,"%H:%M") - datetime.datetime.strptime(in_time,"%H:%M")
                             if int(in_time[:2]) == 0 and int(out_time[:2]) == 0:
-                                if j["Rostered shift"] in ["F3"]:
-                                    df.loc[i,"Mode"] = "Morning Shift"
-                                df.loc[i,"Mode"] = "Manual Swipe Attendence"
+                                if j["Rostered shift"] == "F3":
+                                    df.loc[i,"Mode"] = "MSMA"
+                                    # MSMA: Morning Shift Manual Attendence
+                                else:
+                                    df.loc[i,"Mode"] = "ASMA"
+                                    # MSA: Afternoon Shift Manual Attendence
+                                # else j["Rostered shift"] == "S3"
+                                
                             elif int(in_time[:2]) != 0 and int(out_time[:2]) != 0 and diff < datetime.timedelta(hours=8):
-                                df.loc[i,"Mode"] = "Swipe Adjustment"
+                                if j["Rostered shift"] == "F3":
+                                    df.loc[i,"Mode"] = "MSSA"
+                                    # MSSA: Morning Shift Swipe Adjustment
+                                else:
+                                    df.loc[i,"Mode"] = "AFSA"
+                                # Afternoon Shift Swipe Adjustment
                             else:
                                 df.loc[i,"Mode"] = "ignore"
                 else:

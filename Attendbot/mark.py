@@ -329,18 +329,34 @@ class attendence(DataIn.Bribe):
             else:
                     
                 for i,j in shrink_df.iterrows():
-                    if "Manual Swipe Attendence" in shrink_df.loc[i,"Mode"]:
-                        make_df.loc[i,"Status"] = "Manual Swipe Attendence In-Progress"
-                        status = self.apply_attendence(series=j,idx=i,work_mode="wfh")
+
+                    if "MSMA" in shrink_df.loc[i,"Mode"]:
+                        make_df.loc[i,"Status"] = "Morning Shift Manual Swipe Attendence In-Progress"
+                        print("Morning Shift Manual Swipe Attendence In-Progress...")
+                        status = self.apply_attendence(series=j,idx=i,work_mode="wfh",tags="MS")
                         make_df.loc[i,"Status"] = status
-                        
-                    elif "Swipe Adjustment" in shrink_df.loc[i,"Mode"]:
-                        make_df.loc[i,"Status"] = "Swipe Adjustment In-Progress"
-                        status = self.apply_attendence(series=j,idx=i,work_mode="swipe_adjustment")
+
+                    elif "ASMA" in shrink_df.loc[i,"Mode"]:
+                        make_df.loc[i,"Status"] = "Afternoon Shift Manual Swipe Attendence In-Progress"
+                        print("Afternoon Shift Manual Swipe Attendence In-Progress...")
+                        status = self.apply_attendence(series=j,idx=i,work_mode="wfh",tags="AS")
+                        make_df.loc[i,"Status"] = status
+                    
+                    elif "MSSA" in shrink_df.loc[i,"Mode"]:
+                        make_df.loc[i,"Status"] = "Morning Shift Swipe Adjustment In-Progress"
+                        print("Morning Shift Swipe Adjustment In-Progress")
+                        status = self.apply_attendence(series=j,idx=i,work_mode="swipe_adjustment",tags="MS")
+                        make_df.loc[i,"Status"] = status
+
+                    elif "AFSA" in shrink_df.loc[i,"Mode"]:
+                        make_df.loc[i,"Status"] = "Afternoon Shift Swipe Adjustment In-Progress"
+                        print("Afternoon Shift Swipe Adjustment In-Progress")
+                        status = self.apply_attendence(series=j,idx=i,work_mode="swipe_adjustment",tags="AS")
                         make_df.loc[i,"Status"] = status
                         
                     else:
                         log.error(f"Encountered error at DataIn.Bribe.identify_changes  -> \\n {make_df}")
+                        
             make_df.to_csv(f"{completed}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
             self.cleanup(os.path.join(current_attendance,att_report[0]))
         else:
@@ -349,7 +365,7 @@ class attendence(DataIn.Bribe):
 
     
     #Applies attendence as swipe adjustment or Manual attendance
-    def apply_attendence(self,series:pd.Series,idx,work_mode:str):
+    def apply_attendence(self,series:pd.Series,idx,work_mode:str,tags:str):
         try:
             print(f"Trying to apply attendence for {series['Date']}...")
             print("Check logs for more info!")
@@ -387,6 +403,7 @@ class attendence(DataIn.Bribe):
                 WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#Common-Error-Alert-Model[aria-hidden='false']")))
                 WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//div[@id='Common-Error-Alert-Model' and @aria-hidden='false']/descendant::node()/button")))
                 self.driver.find_element(By.XPATH,"//div[@id='Common-Error-Alert-Model' and @aria-hidden='false']/descendant::node()/button").click()
+            
             elif "swipe_adjustment" in work_mode:
                 # SELECT DROPDOWN OPTION AS SWIPE ADJUSTMENT
                 log.info(f"SELECT DROPDOWN OPTION AS SWIPE ADJUSTMENT TYPE:{work_mode}")
@@ -394,6 +411,7 @@ class attendence(DataIn.Bribe):
                 self.driver.find_element(By.XPATH,"//select[@name='RequestTypeId']/option[@value='Swipe Ad']").click()
             else:
                 pass
+
             # ENTER DATE START
             log.info("TRYING TO INSERT DATE")
             WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//input[@name='ReqAttendanceDate']")))
@@ -412,10 +430,18 @@ class attendence(DataIn.Bribe):
             # out_time_field = self.driver.find_element(By.CSS_SELECTOR,"input#OutTime")
             # self.driver.execute_script("arguments[0].setAttribute('value', '14:00')", in_time_field)
             # self.driver.execute_script("arguments[0].setAttribute('value', '23:30')", out_time_field)
-            self.driver.find_element(By.CSS_SELECTOR,"input#InTime").clear()
-            self.driver.find_element(By.CSS_SELECTOR,"input#InTime").send_keys("14:00")
-            self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").clear()
-            self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").send_keys("23:30")
+            if tags == "AS":
+                self.driver.find_element(By.CSS_SELECTOR,"input#InTime").clear()
+                self.driver.find_element(By.CSS_SELECTOR,"input#InTime").send_keys("14:00")
+                self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").clear()
+                self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").send_keys("23:30")
+            elif tags == "MS":
+                self.driver.find_element(By.CSS_SELECTOR,"input#InTime").clear()
+                self.driver.find_element(By.CSS_SELECTOR,"input#InTime").send_keys("06:00")
+                self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").clear()
+                self.driver.find_element(By.CSS_SELECTOR,"input#OutTime").send_keys("15:30")
+            else:
+                pass
             self.driver.find_element(By.CSS_SELECTOR,"a#submitRecord").click()
             # HANDLE POP UP ALERT UPON SUBMIT
             log.info("HANDLE POP UP ALERT UPON SUBMIT")
