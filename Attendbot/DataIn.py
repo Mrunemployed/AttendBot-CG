@@ -12,7 +12,7 @@ class Bribe():
         try:
             df.fillna("NoValue",inplace=True)
             for i,j in df.iterrows():
-                if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attended shift"] == "Leave"):
+                if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
                     df.loc[i,"Mode"] = "ignore"
                 elif j["Attendance status"] == "PendingApproval":
                     df.loc[i,"Mode"] = "ignore"
