@@ -310,7 +310,7 @@ class attendence(DataIn.Bribe):
 
     def identify_changes(self):
         att_report = os.listdir(current_attendance)
-        make_df = self.manipulate(os.path.abspath(att_report[0]))
+        make_df = self.manipulate(os.path.join(current_attendance,att_report[0]))
         print(make_df)
         if isinstance(make_df,pd.DataFrame):
             shrink_df = make_df[make_df.Mode != "NoValue"]
