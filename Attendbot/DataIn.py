@@ -11,20 +11,19 @@ class Bribe():
     def manipulate(self,df:pd.DataFrame):
         try:
             for i,j in df.iterrows():
-                if (df.loc[i,"Rostered shift"] == "PH") | (df.loc[i,"Rostered shift"] == "WO") | (df.loc[i,"Attendance shift"] == "Leave"):
+                if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
                     df.loc[i,"Mode"] = "ignore"
-                elif df.loc[i,"Attendance status"] == "PendingApproval":
+                elif j["Attendance status"] == "PendingApproval":
                     df.loc[i,"Mode"] = "ignore"
-                elif type(df.loc[i,"Date"])!= float:
-                    if datetime.datetime.strptime(df.loc[i,"Date"],"%d-%b-%Y") >= datetime.datetime.now():
-                        df.loc[i,"Mode"] = "ignore"
-                    else:
-                        pass
+                elif not pd.isnull(j["Date"]) and datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= datetime.datetime.now():
+                #type(df.loc[i,"Date"])!= float:
+                    # if datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= datetime.datetime.now():
+                    df.loc[i,"Mode"] = "ignore"
                 else:
-                    in_time = df.loc[i,"In Time"]
-                    out_time = df.loc[i,"Out Time"]
+                    in_time = j["In Time"]
+                    out_time = j["Out Time"]
 
-                    if type(in_time) == float and type(out_time) == float:
+                    if pd.isnull(in_time) and pd.isnull(out_time):
                         pass
                     else:
                         diff = datetime.datetime.strptime(out_time,"%H:%M") - datetime.datetime.strptime(in_time,"%H:%M")
