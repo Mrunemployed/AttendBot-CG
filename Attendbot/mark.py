@@ -479,6 +479,7 @@ if __name__=='__main__':
     print(cmdargs)
     if check:
         update = refresh.update('Attendbot')
+        print("="*20)
         print("*"*40)
         print("The bot has just been updated")
         print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
