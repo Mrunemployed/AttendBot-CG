@@ -276,6 +276,14 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//select[@id='e1']")))
             self.driver.find_element(By.XPATH,f"//select[@id='e1']/option[@value={self.month}]").click()
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//table/tbody/tr/td/div[@class='EmployeeID']")))
+            time.sleep(10)
+            print("bot is reading the Attendence data...")
+            animation = "|/-\\"
+            idx = 0
+            while idx<20:
+                print(animation[idx % len(animation)], end="\r")
+                idx += 1
+                time.sleep(0.5)
             soup = BeautifulSoup(self.driver.page_source,"html.parser")
             table = soup.find("table",{"id":"Table_report"})
             df_table = pd.read_html(str(table),skiprows=1)
