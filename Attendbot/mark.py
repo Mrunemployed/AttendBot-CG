@@ -476,15 +476,14 @@ if __name__=='__main__':
     cmdargs = sys.argv
     refresh = updates()
     check = refresh.pull_this()
+    print(cmdargs)
     if check:
         update = refresh.update('Attendbot')
-        print(cmdargs)
-        if update:
-            print("*"*40)
-            print("The bot has just been updated")
-            print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
-            print("#"*40)
-        else:
-            main(cmdargs)
+        print("*"*40)
+        print("The bot has just been updated")
+        print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
+        print("#"*40)
+    else:
+        main(cmdargs)
     
  
