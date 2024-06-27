@@ -279,12 +279,12 @@ class attendence(DataIn.Bribe):
             soup = BeautifulSoup(self.driver.page_source,"html.parser")
             table = soup.find("table",{"id":"Table_report"})
             df_table = pd.read_html(str(table))
+            log.info(df_table)
             df = df_table[0]
             self.df = df
-            log.info(df)
-            log.info(df.columns,"\n \n")
+            log.info(df.columns)
             log.info(df["Rostered shift"])
-            df.to_excel(f"{reports_dir}\\{self.month}-source-attendence-data.xlsx",index=False)
+            df.to_csv(f"{reports_dir}\\{self.month}-source-attendence-data.csv",index=False)
             log.info(f"Scraper has successfully performed the task attendence.scrape_attendence")
             print("Scraper has successfully performed the task attendence.scrape_attendence")
             return True
