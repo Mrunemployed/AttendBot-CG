@@ -284,7 +284,7 @@ class attendence(DataIn.Bribe):
             log.info(df)
             log.info(df.columns,"\n \n")
             log.info(df["Rostered shift"])
-            df.to_csv(f"{reports_dir}\\{self.month}-source-attendence-data.xlsx",index=False)
+            df.to_excel(f"{reports_dir}\\{self.month}-source-attendence-data.xlsx",index=False)
             log.info(f"Scraper has successfully performed the task attendence.scrape_attendence")
             print("Scraper has successfully performed the task attendence.scrape_attendence")
             return True
