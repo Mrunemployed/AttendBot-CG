@@ -245,8 +245,9 @@ class attendence(DataIn.Bribe):
             self.driver.switch_to.window(self.driver.window_handles[-1])
             WebDriverWait(self.driver,30).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
             ac = ActionChains(self.driver)
-            menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")[3]
-            ac.move_to_element(menu).perform()
+            menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")
+            menu_idx = menu.index([x for x in menu if re.search("finance",x,re.IGNORECASE)][0])
+            ac.move_to_element(menu[menu_idx]).perform()
             shift_option = self.driver.find_element(By.XPATH,"//ul/li/a[starts-with(@href,'https://shift')]")
             ac.move_to_element(shift_option).click().perform()
             # time.sleep(5)
