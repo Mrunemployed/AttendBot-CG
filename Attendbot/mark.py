@@ -56,6 +56,44 @@ class updates():
             print("no new updates found. Proceeding....")
         return updated
         
+    def remove_older_builds(self,path):
+
+        import shutil
+        try:
+            log.info("Attempting to remove older builds and dependencies...")
+            print("removing older builds....")
+            build = os.path.exists(os.path.join(path,'build'))
+            log.info(f"checking if path exists {os.path.join(path,'build')}...")
+            if build:
+                log.info("Found older builds removing...")
+                print("older build found, now removing....")
+                shutil.rmtree(os.path.join(path,"build"))
+                print("Removed older builds")
+                log.info("removed older builds")
+            else:
+                log.info(f"Invalid path: {os.path.join(path,'build')}")
+                print("No older builds found")
+
+            dirs = os.listdir(path=path)
+            log.info(f"Checking for dirs in current folder: {dirs}")
+            egg_info_dir = [x for x in dirs if re.search(".egg-info$",x)][0]
+            egg_info = os.path.exists(os.path.join(path,egg_info_dir))
+            if egg_info:
+                log.info("Found older builds removing...")
+                print("older Metadata found, now removing....")
+                shutil.rmtree(os.path.join(path,egg_info_dir))
+                print("Removed older egg-info")
+                log.info("removed older builds")
+            else:
+                log.info(f"Invalid path: {os.path.join(path,egg_info_dir)}")
+                print("No older meta-data found.")
+
+            return True
+
+        except Exception as err:
+            print("could not remove older builds \n Please report the problem to the Devs, in case the bot is not performing as expected.")
+            log.error(f"Error while removing older builds: {err}")
+            return False
     
     def update(self,name):
         try:
@@ -71,6 +109,10 @@ class updates():
                 path = os.path.abspath(os.path.dirname(__file__))
                 path = os.path.join(path,"..")
                 os.chdir(path=path)
+                
+                print("now trying to remove older builds...")
+                remove_builds = self.remove_older_builds(path=path)
+
                 install = subprocess.call([sys.executable, '-m', 'pip', 'install', '.'])
                 if install == 1:
                     log.info(f"Failed to install {name}....")
@@ -192,7 +234,7 @@ class attendence(DataIn.Bribe):
                 log.info("pop-up not found No Action required")
                 print("pop-up not found No Action taken...")
             else:
-                WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH,"//span/button[@class='close_popin_btn']")))
+                WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.XPATH,"//span/button[@class='close_popin_btn']")))
                 self.driver.find_element(By.XPATH,"//span/button[@class='close_popin_btn']").click()
                 log.info("pop-up not found and handled")
                 print("Pop-up handled....")
@@ -201,7 +243,7 @@ class attendence(DataIn.Bribe):
             self.driver.find_element(By.XPATH,"//ul/li/a[@title='India Application Portal']").click()
             # time.sleep(5)
             self.driver.switch_to.window(self.driver.window_handles[-1])
-            WebDriverWait(self.driver,10).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
             ac = ActionChains(self.driver)
             menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")[3]
             ac.move_to_element(menu).perform()
@@ -209,7 +251,7 @@ class attendence(DataIn.Bribe):
             ac.move_to_element(shift_option).click().perform()
             # time.sleep(5)
             self.driver.switch_to.window(self.driver.window_handles[-1])
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"li#liattendance")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"li#liattendance")))
             self.driver.find_element(By.CSS_SELECTOR,"li#liattendance").click()
             self.driver.find_element(By.XPATH,"//ul/li[@id='liattendance']/ul[@class='dropdown-menu']/li/a").click()
             WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//a[@id='self-attendance']")))
@@ -288,7 +330,7 @@ class attendence(DataIn.Bribe):
             log.info(series)
             series = series.to_frame().T
             
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"a#Self-team")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"a#Self-team")))
             self_tab = self.driver.find_element(By.CSS_SELECTOR,"a#Self-team")
             # CHECK IF THE "SELF" TAB IS CURRENTLY OPEN
             log.info("CHECK IF THE SELF TAB IS CURRENTLY OPEN")
@@ -308,19 +350,19 @@ class attendence(DataIn.Bribe):
                 # SELECT DROPDOWN OPTION AS MANUAL ATTENDENCE
                 log.info(f"SELECT DROPDOWN OPTION AS MANUAL ATTENDENCE TYPE:{work_mode}")
                 time.sleep(3)
-                WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH,"//select[@name='RequestTypeId']/option[@value='Manual Attendance']")))
+                WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//select[@name='RequestTypeId']/option[@value='Manual Attendance']")))
                 self.driver.find_element(By.XPATH,"//select/*[@value='Manual Attendance' and position()=1]").click()
                 # SELECT REGULARIZATION TYPE AND HANDLE POP UP ALERT
                 log.info("SELECT REGULARIZATION TYPE AND HANDLE POP UP ALERT")
-                WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH,"//select[@name='RegularizationType']/option[@value='Working From Home']")))
+                WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//select[@name='RegularizationType']/option[@value='Working From Home']")))
                 self.driver.find_element(By.XPATH,"//select[@name='RegularizationType']/option[@value='Working From Home']").click()
-                WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#Common-Error-Alert-Model[aria-hidden='false']")))
-                WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH,"//div[@id='Common-Error-Alert-Model' and @aria-hidden='false']/descendant::node()/button")))
+                WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#Common-Error-Alert-Model[aria-hidden='false']")))
+                WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//div[@id='Common-Error-Alert-Model' and @aria-hidden='false']/descendant::node()/button")))
                 self.driver.find_element(By.XPATH,"//div[@id='Common-Error-Alert-Model' and @aria-hidden='false']/descendant::node()/button").click()
             elif "swipe_adjustment" in work_mode:
                 # SELECT DROPDOWN OPTION AS SWIPE ADJUSTMENT
                 log.info(f"SELECT DROPDOWN OPTION AS SWIPE ADJUSTMENT TYPE:{work_mode}")
-                WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH,"//select[@name='RequestTypeId']/option[@value='Swipe Ad']")))
+                WebDriverWait(self.driver,30).until(EC.visibility_of_element_located((By.XPATH,"//select[@name='RequestTypeId']/option[@value='Swipe Ad']")))
                 self.driver.find_element(By.XPATH,"//select[@name='RequestTypeId']/option[@value='Swipe Ad']").click()
             else:
                 pass
@@ -337,7 +379,7 @@ class attendence(DataIn.Bribe):
 
             # SEND TIMEFRAME
             log.info("SEND TIMEFRAME")
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"input#InTime")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"input#InTime")))
             # in_time_field = self.driver.find_element(By.CSS_SELECTOR,"input#InTime")
             # out_time_field = self.driver.find_element(By.CSS_SELECTOR,"input#OutTime")
             # self.driver.execute_script("arguments[0].setAttribute('value', '14:00')", in_time_field)
@@ -349,13 +391,13 @@ class attendence(DataIn.Bribe):
             self.driver.find_element(By.CSS_SELECTOR,"a#submitRecord").click()
             # HANDLE POP UP ALERT UPON SUBMIT
             log.info("HANDLE POP UP ALERT UPON SUBMIT")
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#submit-attendance[aria-hidden='false']")))
-            WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"button#SaveRecords")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#submit-attendance[aria-hidden='false']")))
+            WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"button#SaveRecords")))
             self.driver.find_element(By.CSS_SELECTOR,"button#SaveRecords").click()
             # HANDLE POP UP ALERT UPON CONFIRMATION OF SUBMIT
             log.info("HANDLE POP UP ALERT UPON CONFIRMATION OF SUBMIT")
-            WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#submit-successfully-attendance[aria-hidden='false']")))
-            WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH,"//div[@id='submit-successfully-attendance' and @aria-hidden='false']/descendant::node()/button")))
+            WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div#submit-successfully-attendance[aria-hidden='false']")))
+            WebDriverWait(self.driver,30).until(EC.element_to_be_clickable((By.XPATH,"//div[@id='submit-successfully-attendance' and @aria-hidden='false']/descendant::node()/button")))
             self.driver.find_element(By.XPATH,"//div[@id='submit-successfully-attendance' and @aria-hidden='false']/descendant::node()/button").click()
             print(f"Successfully applied attendence for date: {series['Date']}")
             return f'Successful for Date: {series.loc[idx,"Date"]}'
@@ -365,7 +407,7 @@ class attendence(DataIn.Bribe):
             log.error(f"Encountered error at attendence.apply_attendance -> {e} \n data: {series} \n type: {work_mode}")
             print(f"Failed to apply attendence for date: {series['Date']}")
             if "https://shiftallowance.in.capgemini.com/AMSAttendanceRequest/SelfAttendance" in self.driver.current_url:                
-                WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"li#liattendance")))
+                WebDriverWait(self.driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR,"li#liattendance")))
                 self.driver.find_element(By.CSS_SELECTOR,"li#liattendance").click()
                 self.driver.find_element(By.XPATH,"//ul/li[@id='liattendance']/ul[@class='dropdown-menu']/li/a").click()
             return "Failed"
