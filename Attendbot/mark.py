@@ -483,6 +483,7 @@ if __name__=='__main__':
             print("*"*20)
             print("The bot has just been updated")
             print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
+            print("#"*20)
         else:
             main(cmdargs)
     
