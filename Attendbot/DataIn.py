@@ -1,4 +1,3 @@
-from typing import Any
 import pandas as pd
 from datetime import datetime
 import datetime
@@ -56,9 +55,9 @@ class Bribe():
             return str(e)
 
 
-# df = pd.read_csv("sample.csv")
-# br = Bribe()
-# c = br.manipulate(df)
-# print(c)
+df = pd.read_csv("sample.csv")
+br = Bribe()
+c = br.manipulate(df)
+print(c)
 
 

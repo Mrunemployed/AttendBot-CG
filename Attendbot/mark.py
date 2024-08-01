@@ -24,6 +24,7 @@ logs_dir = os.path.join(path,"logs")
 if not os.path.exists(logs_dir):
     os.mkdir(logs_dir)
 print("Find logs at:",logs_dir)
+
 path_reports = os.path.abspath(os.path.dirname(__file__))
 current_attendance = os.path.join(path_reports,"current_attendance")
 if not os.path.exists(current_attendance):
