@@ -325,7 +325,7 @@ class attendence(DataIn.Bribe):
         
     def identify_changes(self):
         att_report = self.select_file()
-        make_df = self.manipulate()
+        make_df = self.manipulate(att_report)
         print(make_df)
         if isinstance(make_df,pd.DataFrame):
             shrink_df = make_df[make_df.Mode != "NoValue"]
