@@ -12,7 +12,7 @@ class Bribe():
         try:
             df = pd.read_csv(df_path)
             for i,j in df.iterrows():
-                if pd.notna(j["Attendance shift"]) and pd.notna(j["Rostered shift"]):
+                if pd.notna(j["Rostered shift"]):
                     if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
                         df.loc[i,"Mode"] = "ignore"
                     elif j["Attendance status"] == "PendingApproval":
@@ -33,10 +33,12 @@ class Bribe():
                                 if j["Rostered shift"] == "F3":
                                     df.loc[i,"Mode"] = "MSMA"
                                     # MSMA: Morning Shift Manual Attendence
-                                else:
+                                elif j["Rostered shift"] == "S2":
                                     df.loc[i,"Mode"] = "ASMA"
                                     # MSA: Afternoon Shift Manual Attendence
                                 # else j["Rostered shift"] == "S3"
+                                else:
+                                    pass
                                 
                             elif int(in_time[:2]) != 0 and int(out_time[:2]) != 0 and diff < datetime.timedelta(hours=8):
                                 if j["Rostered shift"] == "F3":
