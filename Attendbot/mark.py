@@ -46,6 +46,7 @@ class updates():
     def __init__(self) -> None:
         path = os.path.abspath(os.path.dirname(__file__))
         path = os.path.join(path,"..")
+        print(f"Initializing repo at : {path}")
         self.ginit = git.Repo(path)
         log.info("Initialized repo. Prodceeding....")
         print("Initialized Repo executing...")
