@@ -316,10 +316,16 @@ class attendence(DataIn.Bribe):
         else:
             print("Nothing to cleanup")
 
-
-    def identify_changes(self):
+    def select_file(self):
         att_report = os.listdir(current_attendance)
-        make_df = self.manipulate(os.path.join(current_attendance,att_report[0]))
+        exp = re.compile(f"^[{self.month}]-[a-zA-Z]*")
+        contents = [x for x in att_report if re.search(exp,x)][0]
+        path = os.path.join(current_attendance,contents)
+        return path
+        
+    def identify_changes(self):
+        att_report = self.select_file()
+        make_df = self.manipulate()
         print(make_df)
         if isinstance(make_df,pd.DataFrame):
             shrink_df = make_df[make_df.Mode != "NoValue"]
