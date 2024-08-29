@@ -565,7 +565,6 @@ if __name__=='__main__':
     if check:
         update = refresh.update('Attendbot')
         print("\n","\033[34m=\033[37m"*40)
-        print("="*40,"\n")
         print("\033[32m  The bot has just been updated \033[37m")
         print("\033[32m  Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> \033[37m \n")
         print("\033[34m#\033[37m"*40)
