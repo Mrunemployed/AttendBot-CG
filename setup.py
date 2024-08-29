@@ -10,13 +10,15 @@ class setupconfig(install):
         install.run(self)
         if not "config.json" in os.listdir():
             git_path = os.path.join(os.path.abspath(os.path.curdir))
-            config_file = os.path.join(os.path.abspath(os.path.curdir),"config.json")
+            config_file = os.path.join(self.install_scripts, 'config.json')
 
             config_content = {
                 "git_repo": git_path
             }
             with open(config_file, 'w') as cfg:
                 json.dump(config_content,cfg)
+        else:
+            git_path = os.path.join(self.install_scripts, 'config.json')
 
 setup(
     name='Attendbot',
