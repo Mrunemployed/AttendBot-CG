@@ -45,6 +45,7 @@ log.setLevel(logging.INFO)
 
 class updates():
     def __init__(self) -> None:
+        path = None
         try:
             with open('config.json') as file:
                 conf = json.loads(file)
@@ -56,8 +57,12 @@ class updates():
             print(err)
             log.error(f"Could not find the config file, error: {err}")
             self.ginit = None
-            # path = os.path.abspath(os.path.dirname(__file__))
-            # path = os.path.join(path,"..")
+        finally:
+            if not path:
+                path = os.path.abspath(os.path.dirname(__file__))
+                path = os.path.join(path,"..")
+                self.ginit = git.Repo(path)
+            
             
             
 
@@ -567,7 +572,7 @@ if __name__=='__main__':
     else:
         print("\033[41m Failed to update the Bot \033[40m \n")
         print("\033[34m=\033[37m"*100)
-        print("\033[32m Bot will continue to run on the older build. \nThe devs are working to fix this! \nIn case the issue persists I recommend re-installing the Bot. \nAt: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
+        print("\033[32m Bot will continue to run on the older build. \n The devs are working to fix this! \n In case the issue persists I recommend re-installing the Bot. \n At: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
         print("\033[34m=\033[37m"*100)
         main(cmdargs)
     
