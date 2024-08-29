@@ -9,7 +9,7 @@ class setupconfig(install):
 
         install.run(self)
 
-        config_file = os.path.join(os.path.curdir,"config.json")
+        config_file = os.path.join(os.path.abspath(os.path.curdir),"config.json")
 
         config_content = {
             "git_repo": config_file
