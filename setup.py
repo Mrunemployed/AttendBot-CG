@@ -8,11 +8,11 @@ class setupconfig(install):
     def run(self):
 
         install.run(self)
-
+        git_path = os.path.join(os.path.abspath(os.path.curdir))
         config_file = os.path.join(os.path.abspath(os.path.curdir),"config.json")
 
         config_content = {
-            "git_repo": config_file
+            "git_repo": git_path
         }
 
         with open(config_file, 'w') as cfg:
