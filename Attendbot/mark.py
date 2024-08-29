@@ -97,6 +97,7 @@ class updates():
             return updated
         except Exception as err:
             print("\033[41m Failed to pull changes while updating the Bot! \033[40m \n")
+            print("\033[32m Bot will continue to run on the older build. \n The devs are working to fix this! \n In case the issue persists I recommend re-installing the Bot. \n At: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
             log.error(f"Failed to update the Bot, failed to pull changes from repo error: {err}")
             return False
         
@@ -586,7 +587,7 @@ if __name__=='__main__':
         print("\033[34m#\033[37m"*40)
     else:
         print("\033[34m=\033[37m"*100)
-        print("\033[32m Bot will continue to run on the older build. \n The devs are working to fix this! \n In case the issue persists I recommend re-installing the Bot. \n At: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
+        print("\033[32m Bot will run now... \033[37m \n")
         print("\033[34m=\033[37m"*100)
         main(cmdargs)
     
