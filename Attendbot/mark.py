@@ -17,6 +17,7 @@ import subprocess
 import os
 import re
 import git
+import json
 
 
 path = os.path.abspath(os.path.dirname(__file__))
@@ -51,6 +52,13 @@ class updates():
         log.info("Initialized repo. Prodceeding....")
         print("Initialized Repo executing...")
     
+    def set_git_path(self):
+        try:
+            with open('config.json') as file:
+                conf = json.loads(file)
+        except Exception as err:
+            print()
+
     def pull_this(self):
         updated = False
         current = self.ginit.head.commit
@@ -255,7 +263,7 @@ class attendence(DataIn.Bribe):
             WebDriverWait(self.driver,30).until(EC.presence_of_all_elements_located((By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")))
             self.driver.find_element(By.TAG_NAME,"body").send_keys(Keys.CONTROL + 't')
             self.driver.get("https://shiftallowance.in.capgemini.com")
-            
+
             # Menu removed for go->to Shift Allowance Page hardcoding URL for fix.
                 # ac = ActionChains(self.driver)
                 # menu = self.driver.find_elements(By.XPATH,"//ul/li[@class='has-popup static']/a[contains(@class, 'static')]")
