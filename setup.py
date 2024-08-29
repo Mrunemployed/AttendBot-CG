@@ -22,6 +22,7 @@ class setupconfig(install):
 
             with open(config_file, 'w') as cfg:
                 json.dump(config_content,cfg)
+                cfg.close()
 
     def create_dependencies(self):
         flag = False
@@ -52,6 +53,7 @@ class setupconfig(install):
                 config_content['completed'] = completed
                 config_content['logs_dir'] = logs_dir
                 config_content['current_attendance'] = current_attendance
+                cfg
                 json.dump(config_content,cfg)
         else:
             pass

@@ -22,9 +22,9 @@ import importlib.resources as pkgres
 
 
 packageName = 'Attendbot'
-cnf_fp = pkgres.path(packageName,'config.json')
-with open(cnf_fp,"r") as cnf_file:
-    config_content = json.load(cnf_file)
+with pkgres.path(packageName,'config.json') as cnf_fp:
+    with open(cnf_fp,"r") as cnf_file:
+        config_content = json.load(cnf_file)
 
 logs_dir = config_content['logs_dir']
 git_path = config_content['git_repo']
