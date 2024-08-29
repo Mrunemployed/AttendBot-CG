@@ -18,26 +18,18 @@ import os
 import re
 import git
 import json
+import pkg_resources
 
 
-path = os.path.abspath(os.path.dirname(__file__))
-logs_dir = os.path.join(path,"logs")
-if not os.path.exists(logs_dir):
-    os.mkdir(logs_dir)
-print("\033[32m Find logs at:",logs_dir,"\033[37m")
+packageName = 'Attendbot'
+cnf_fp = pkg_resources.resource_filename(packageName,'config.json')
+with open(cnf_fp,"r") as cnf_file:
+    config_content = json.load(cnf_file)
 
-path_reports = os.path.abspath(os.path.dirname(__file__))
-current_attendance = os.path.join(path_reports,"current_attendance")
-if not os.path.exists(current_attendance):
-    os.mkdir(current_attendance)
-# print("Find attendance reports at:",current_attendance)
-
-path_completed = os.path.abspath(os.path.dirname(__file__))
-completed = os.path.join(path_reports,"completed")
-if not os.path.exists(current_attendance):
-    os.mkdir(current_attendance)
-print("\033[36m Find attendance reports at:",completed,"\033[37m \n")
-
+logs_dir = config_content['logs_dir']
+git_path = config_content['git_repo']
+completed = config_content['completed']
+current_attendance = config_content['current_attendance']
 
 logging.basicConfig(filename=f'{logs_dir}\\{datetime.datetime.strftime(datetime.datetime.today(),"%Y-%m-%d")}.log',format='%(asctime)s %(message)s',filemode='a')
 log = logging.getLogger()
@@ -48,12 +40,10 @@ class updates():
         path = None
         print(os.listdir())
         try:
-            with open('config.json') as file:
-                conf = json.load(file)
-                path = conf['git_repo']
-                print(f"\033[44m Initializing repo at : {path} \033[40m")
-                print("\033[36m Initialized Repo executing... \033[37m")
-                self.ginit = git.Repo(path)
+            path = git_path
+            print(f"\033[44m Initializing repo at : {path} \033[40m")
+            print("\033[36m Initialized Repo executing... \033[37m")
+            self.ginit = git.Repo(path)
         except Exception as err:
             print(err)
             log.error(f"Could not find the config file, error: {err}")
