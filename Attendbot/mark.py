@@ -78,22 +78,27 @@ class updates():
             
 
     def pull_this(self):
-        updated = False
-        if not self.ginit:
+        try:
+            updated = False
+            if not self.ginit:
+                return False
+            else:
+                pass
+            current = self.ginit.head.commit
+            self.ginit.remotes.origin.pull()
+            log.info("Attempting pull from repo...")
+            if current != self.ginit.head.commit:
+                log.info("Pulled changes from repo.")
+                print("\033[42m new updates found! \033[40m")
+                updated = True
+            else:
+                log.info("No new updates detected. Proceeding...")
+                print("no new updates found. Proceeding....")
+            return updated
+        except Exception as err:
+            print("\033[41m Failed to pull changes while updating the Bot! \033[40m \n")
+            log.error(f"Failed to update the Bot, failed to pull changes from repo error: {err}")
             return False
-        else:
-            pass
-        current = self.ginit.head.commit
-        self.ginit.remotes.origin.pull()
-        log.info("Attempting pull from repo...")
-        if current != self.ginit.head.commit:
-            log.info("Pulled changes from repo.")
-            print("\033[42m new updates found! \033[40m")
-            updated = True
-        else:
-            log.info("No new updates detected. Proceeding...")
-            print("no new updates found. Proceeding....")
-        return updated
         
     def remove_older_builds(self,path):
 
@@ -580,7 +585,6 @@ if __name__=='__main__':
         print("\033[32m  Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> \033[37m \n")
         print("\033[34m#\033[37m"*40)
     else:
-        print("\033[41m Failed to update the Bot \033[40m \n")
         print("\033[34m=\033[37m"*100)
         print("\033[32m Bot will continue to run on the older build. \n The devs are working to fix this! \n In case the issue persists I recommend re-installing the Bot. \n At: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
         print("\033[34m=\033[37m"*100)
