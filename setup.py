@@ -60,7 +60,7 @@ class setupconfig(install):
 
 setup(
     name='Attendbot',
-    version='1.5',
+    version='2.0',
     author='Rudradip Khan',
     description='A bot that uses Beautiful Soup along with Selenium to effortlessly put your shift claim manual attendence in the Capgemini portal',
     packages=find_packages(),
