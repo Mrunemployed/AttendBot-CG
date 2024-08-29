@@ -22,7 +22,7 @@ import pkg_resources
 
 
 packageName = 'Attendbot'
-cnf_fp = pkg_resources.resource_filename(packageName,'config.json')
+cnf_fp = os.path.join(os.path.dirname(__file__),'config.json')
 with open(cnf_fp,"r") as cnf_file:
     config_content = json.load(cnf_file)
 
