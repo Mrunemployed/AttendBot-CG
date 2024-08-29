@@ -48,7 +48,7 @@ class updates():
         path = None
         try:
             with open('config.json') as file:
-                conf = json.loads(file)
+                conf = json.load(file)
                 path = conf['git_repo']
                 print(f"\033[44m Initializing repo at : {path} \033[40m")
                 print("\033[36m Initialized Repo executing... \033[37m")

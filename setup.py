@@ -17,8 +17,6 @@ class setupconfig(install):
 
         with open(config_file, 'w') as cfg:
             json.dump(config_content,cfg)
-        
-        print(f"config added at {config_file}")
 
 setup(
     name='Attendbot',
