@@ -18,7 +18,7 @@ class setupconfig(install):
             with open(config_file, 'w') as cfg:
                 json.dump(config_content,cfg)
         else:
-            git_path = os.path.join(self.install_scripts, 'config.json')
+            pass
 
 setup(
     name='Attendbot',
