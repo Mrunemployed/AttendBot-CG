@@ -48,12 +48,15 @@ class setupconfig(install):
 
         if flag:
             config_file = os.path.join(self.install_lib, "Attendbot", "config.json")
-            with open(config_file, 'r+') as cfg:
+            with open(config_file, 'r') as cfg:
                 config_content = json.load(cfg)
-                config_content['completed'] = completed
-                config_content['logs_dir'] = logs_dir
-                config_content['current_attendance'] = current_attendance
-                cfg
+                cfg.close()
+            with  open(config_file, 'w') as cfg:
+                config_content.update({
+                    'completed': completed,
+                    'logs_dir': logs_dir,
+                    'current_attendance': current_attendance
+                    })
                 json.dump(config_content,cfg)
         else:
             pass
