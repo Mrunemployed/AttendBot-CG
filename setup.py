@@ -6,15 +6,16 @@ import json
 class setupconfig(install):
 
     def run(self):
-
         install.run(self)
-        if "config.json" in os.listdir():
+        self.create_cnf_file()
+
+    def create_cnf_file(self):
+        git_path = os.path.join(os.path.abspath(os.path.curdir))
+        cnf_dir = os.path.join(self.install_lib, "Attendbot")
+        if "config.json" in os.listdir(cnf_dir):
             pass
-
         else:
-            git_path = os.path.join(os.path.abspath(os.path.curdir))
-            config_file = os.path.join(self.install_scripts, 'config.json')
-
+            config_file = os.path.join(self.install_lib, "Attendbot", "config.json")
             config_content = {
                 "git_repo": git_path
             }
