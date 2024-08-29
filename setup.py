@@ -8,7 +8,10 @@ class setupconfig(install):
     def run(self):
 
         install.run(self)
-        if not "config.json" in os.listdir():
+        if "config.json" in os.listdir():
+            pass
+
+        else:
             git_path = os.path.join(os.path.abspath(os.path.curdir))
             config_file = os.path.join(self.install_scripts, 'config.json')
 
@@ -17,8 +20,6 @@ class setupconfig(install):
             }
             with open(config_file, 'w') as cfg:
                 json.dump(config_content,cfg)
-        else:
-            pass
 
 setup(
     name='Attendbot',
