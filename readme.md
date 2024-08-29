@@ -65,34 +65,8 @@ In case Git or any SCM is not installed [Click here](https://git-scm.com/downloa
     ![Download Git](imgs/kdownload-git.png)
 - After the download has finished, follow the instructions and complete the installation.
     ![Install Git](imgs/install-git.png)
+- For the detailed instructions please check the `imgs` folder it contains step-by-step instructions on how to install Git.
 - Now you're good to go!
-
-# Image Carousel
-
-<div style="position: relative; max-width: 600px; margin: auto; overflow: hidden;">
-    <div style="display: flex; animation: slide 10s infinite;">
-        <img src="imgs/next1.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next2.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/Next3.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next4.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next5.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next6.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next7.png" style="width: 100%; flex-shrink: 0;"> 
-        <img src="imgs/next8.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next9.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next10.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next11.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next12.png" style="width: 100%; flex-shrink: 0;">
-        <img src="imgs/next13.png" style="width: 100%; flex-shrink: 0;">
-    </div>
-<style>
-   @keyframes slide {
-    0% { transform: translateX(0); }
-    33% { transform: translateX(-100%); }
-    66% { transform: translateX(-200%); }
-    100% { transform: translateX(-300%); }
-}
-</style>
 
 
 >[!Note]
