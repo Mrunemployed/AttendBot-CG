@@ -26,10 +26,29 @@ with pkgres.path(packageName,'config.json') as cnf_fp:
     with open(cnf_fp,"r") as cnf_file:
         config_content = json.load(cnf_file)
 
-logs_dir = config_content['logs_dir']
+path = os.path.dirname(os.path.abspath(__file__))
+logs_dir = os.path.join(path,"logs")
+if not os.path.exists(logs_dir):
+    os.mkdir(logs_dir)
+    flag = True
+print("\033[32m Find logs at:",logs_dir,"\033[37m")
+
+current_attendance = os.path.join(path,"current_attendance")
+if not os.path.exists(current_attendance):
+    os.mkdir(current_attendance)
+    flag = True
+# print("Find attendance reports at:",current_attendance)
+
+completed = os.path.join(path,"completed")
+if not os.path.exists(current_attendance):
+    os.mkdir(current_attendance)
+    flag = True
+print("\033[36m Find attendance reports at:",completed,"\033[37m \n")
+
+# logs_dir = config_content['logs_dir']
 git_path = config_content['git_repo']
-completed = config_content['completed']
-current_attendance = config_content['current_attendance']
+# completed = config_content['completed']
+# current_attendance = config_content['current_attendance']
 
 logging.basicConfig(filename=f'{logs_dir}\\{datetime.datetime.strftime(datetime.datetime.today(),"%Y-%m-%d")}.log',format='%(asctime)s %(message)s',filemode='a')
 log = logging.getLogger()

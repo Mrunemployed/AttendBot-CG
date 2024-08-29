@@ -8,7 +8,7 @@ class setupconfig(install):
     def run(self):
         install.run(self)
         self.create_cnf_file()
-        self.create_dependencies()
+        # self.create_dependencies()
 
     def create_cnf_file(self):
         git_path = os.path.join(os.path.abspath(os.path.curdir))
@@ -24,42 +24,6 @@ class setupconfig(install):
                 json.dump(config_content,cfg)
                 cfg.close()
 
-    def create_dependencies(self):
-        flag = False
-
-        path = os.path.join(self.install_lib, "Attendbot")
-        logs_dir = os.path.join(path,"logs")
-        if not os.path.exists(logs_dir):
-            os.mkdir(logs_dir)
-            flag = True
-        print("\033[32m Find logs at:",logs_dir,"\033[37m")
-
-        current_attendance = os.path.join(path,"current_attendance")
-        if not os.path.exists(current_attendance):
-            os.mkdir(current_attendance)
-            flag = True
-        # print("Find attendance reports at:",current_attendance)
-
-        completed = os.path.join(path,"completed")
-        if not os.path.exists(current_attendance):
-            os.mkdir(current_attendance)
-            flag = True
-        print("\033[36m Find attendance reports at:",completed,"\033[37m \n")
-
-        if flag:
-            config_file = os.path.join(self.install_lib, "Attendbot", "config.json")
-            with open(config_file, 'r') as cfg:
-                config_content = json.load(cfg)
-                cfg.close()
-            with  open(config_file, 'w') as cfg:
-                config_content.update({
-                    'completed': completed,
-                    'logs_dir': logs_dir,
-                    'current_attendance': current_attendance
-                    })
-                json.dump(config_content,cfg)
-        else:
-            pass
 
 setup(
     name='Attendbot',
