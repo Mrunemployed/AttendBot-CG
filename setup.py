@@ -8,15 +8,15 @@ class setupconfig(install):
     def run(self):
 
         install.run(self)
-        git_path = os.path.join(os.path.abspath(os.path.curdir))
-        config_file = os.path.join(os.path.abspath(os.path.curdir),"config.json")
+        if not "config.json" in os.listdir():
+            git_path = os.path.join(os.path.abspath(os.path.curdir))
+            config_file = os.path.join(os.path.abspath(os.path.curdir),"config.json")
 
-        config_content = {
-            "git_repo": git_path
-        }
-
-        with open(config_file, 'w') as cfg:
-            json.dump(config_content,cfg)
+            config_content = {
+                "git_repo": git_path
+            }
+            with open(config_file, 'w') as cfg:
+                json.dump(config_content,cfg)
 
 setup(
     name='Attendbot',
