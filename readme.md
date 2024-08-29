@@ -2,10 +2,6 @@
 
 <!-- ![Attendbot Logo](https://via.placeholder.com/150) -->
 
----
-
-## What is Attendbot?
-
 Attendbot is a powerful automation tool designed to simplify the process of submitting manual attendance in the Capgemini portal. Powered by Selenium and Beautiful Soup, Attendbot operates seamlessly in headless mode, providing a hassle-free experience for users.
 
 ---
@@ -26,34 +22,23 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 
 ---
 
+# Requirements
 
+The requirements emntioned below needs to be addressed before our Bot can work, lets try to figure out whether you have all the requirements fulfilled or not.
 
-## Installation (Windows)
-
-> [!NOTE]
-> If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
-
-
----
-
-### Requirements
 - Python 3.10 or higher
-
+- Git or an equivalent SCM tool installed.
 
 > [!TIP] 
-> ##### Not sure whether you have python?
-> Perform the following steps.
-
+> **Not sure whether you have python?** Perform the following steps.
 
 ```
 py --version
-
 ```
  or
 
 ```
 python --version
-
 ```
 
  Should return a response like:
@@ -62,47 +47,132 @@ python --version
 Python 3.11.4
 ```
 
+> [!TIP] 
+> **Checking out whether Git is installed on your device** Perform the following steps.
 
-### Instructions
+In your command line upon running the command `git` should return a simillar result:
+```
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
+```
+This means `git` is correctly installed on your device.
 
->[!NOTE] 
->You need to have python already installed in order to use this bot.
----
+In case Git or any SCM is not installed [Click here](https://git-scm.com/download/win) to download **git**.
+- Now depending your version of windows select `64-bit` or `32-bit` accordingly.
+    ![Download Git](imgs/kdownload-git.png)
+- After the download has finished, follow the instructions and complete the installation.
+    ![Install Git](imgs/install-git.png)
+- Now you're good to go!
+
+# Image Carousel
+
+<div style="position: relative; max-width: 600px; margin: auto; overflow: hidden;">
+    <div style="display: flex; transition: transform 0.5s ease-in-out;">
+        <img src="imgs/next1.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next2.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/Next3.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next4.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next5.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next6.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next7.png" style="width: 100%; flex-shrink: 0;"> 
+        <img src="imgs/next8.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next9.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next10.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next11.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next12.png" style="width: 100%; flex-shrink: 0;">
+        <img src="imgs/next13.png" style="width: 100%; flex-shrink: 0;">
+    </div>
+    <button style="position: absolute; top: 50%; left: 10px; background-color: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer;" onclick="prevSlide()">&#10094;</button>
+    <button style="position: absolute; top: 50%; right: 10px; background-color: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer;" onclick="nextSlide()">&#10095;</button>
+</div>
+
+<script>
+let index = 0;
+
+function showSlide(i) {
+    const slides = document.querySelectorAll('div > img');
+    if (i >= slides.length) index = 0;
+    if (i < 0) index = slides.length - 1;
+    const offset = -index * 100;
+    slides[0].parentElement.style.transform = `translateX(${offset}%)`;
+}
+
+function nextSlide() {
+    index++;
+    showSlide(index);
+}
+
+function prevSlide() {
+    index--;
+    showSlide(index);
+}
+
+showSlide(index);
+</script>
 
 
-1. Open Command Prompt.
-2. Navigate to the directory containing the Attendbot package.
-3. Run the following command to install Attendbot:
-    
+>[!Note]
+>The installation process is pretty straight forward, just make sure to keep to the default settings unless you know what you are doing.
+>If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
+
+
+# Installation (Windows)
+
+
+1. Navigate to an empty directory where you want to download the bot.
+
+2. **Clone** The git **download** branch
     ```bash
-
-    py -m pip install .
-    
-    
+    git clone --branch download https://github.com/Mrunemployed/AttendBot-CG.git
     ```
 
+> [!Tip]
+> ***Cloning*** in simple terms is creating a replica of the code that is publicly hosted on my github. Curious to know more? Read more about [Cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+> ***Branching*** in Git is like creating different game levels to try new ideas without messing up. Learn more about [Branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+> All these steps are to help us download the code that is hosted on **GitHub**.
+
+3. Open Command Prompt.
+
+4. Navigate to the directory containing the Attendbot package like : `cd ~\<someDir>\<Dir containing`.
+
+5. Run the following command to install Attendbot:
+    
+    ```bash
+    py -m pip install .
+    ```
+
+Congratulations you have now successfully installed the Bot!
+
 ---
 
-## Usage
+# Usage
 
-### Running the Program
+### Running the bot
+
 1. Open Command Prompt.
 2. Run the following command to mark attendance for the previous month:
    
     ```bash
 
-    py -m Attendbot.mark
-
+    py -m Attendbot.mark -m<Month In Number>
     ```
+    **example:**
+    ```bash
+    py -m Attendbot.mark -m8
+    ```
+This should tell the bot that you want it to mark your shift claim for the Month of August.
+By default if you were to not mention any month, the Bot try to mark the attendence for the previous month.
 
 ### Interactive Mode
 
-To run the program in interactive mode (displaying the browser window), use the -i flag:
+To run the Bot in interactive mode (displaying the browser window), use the `-i` flag:
 
 ```bash
 
-py -m Attendbot.mark -i
-
+py -m Attendbot.mark -i -m8
 ```
 
 
@@ -135,6 +205,10 @@ py -m Attendbot.mark -m 6 -i
 ```
 
 This will run the bot in Interactive mode and tell it to mark attendence for the month of June.
+
+### Stopping the Bot
+
+Press `CTRL` + `C` to stop the execution of the bot at runtime.
 
 ### Contribution
 
