@@ -87,8 +87,8 @@ In case Git or any SCM is not installed [Click here](https://git-scm.com/downloa
 
 > [!Tip]
 > ***Cloning*** in simple terms is creating a replica of the code that is publicly hosted on my github. Curious to know more? Read more about [Cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-> ***Branching*** in Git is like creating different game levels to try new ideas without messing up. Learn more about [Branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
-> All these steps are to help us download the code that is hosted on **GitHub**.
+>> ***Branching*** in Git is like creating different game levels to try new ideas without messing up. Learn more about [Branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+>> All these steps are to help us download the code that is hosted on **GitHub**.
 
 3. Open Command Prompt.
 
