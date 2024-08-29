@@ -46,6 +46,7 @@ log.setLevel(logging.INFO)
 class updates():
     def __init__(self) -> None:
         path = None
+        print(os.listdir())
         try:
             with open('config.json') as file:
                 conf = json.load(file)
