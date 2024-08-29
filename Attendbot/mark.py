@@ -18,11 +18,11 @@ import os
 import re
 import git
 import json
-import pkg_resources
+import importlib.resources as pkgres
 
 
 packageName = 'Attendbot'
-cnf_fp = os.path.join(os.path.dirname(__file__),'config.json')
+cnf_fp = pkgres.path(packageName,'config.json')
 with open(cnf_fp,"r") as cnf_file:
     config_content = json.load(cnf_file)
 
