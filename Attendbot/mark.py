@@ -24,7 +24,7 @@ path = os.path.abspath(os.path.dirname(__file__))
 logs_dir = os.path.join(path,"logs")
 if not os.path.exists(logs_dir):
     os.mkdir(logs_dir)
-print("Find logs at:",logs_dir)
+print("\033[32m Find logs at:",logs_dir,"\033[37m")
 
 path_reports = os.path.abspath(os.path.dirname(__file__))
 current_attendance = os.path.join(path_reports,"current_attendance")
@@ -36,7 +36,7 @@ path_completed = os.path.abspath(os.path.dirname(__file__))
 completed = os.path.join(path_reports,"completed")
 if not os.path.exists(current_attendance):
     os.mkdir(current_attendance)
-print("Find attendance reports at:",completed)
+print("\033[36m Find attendance reports at:",completed,"\033[37m \n")
 
 
 logging.basicConfig(filename=f'{logs_dir}\\{datetime.datetime.strftime(datetime.datetime.today(),"%Y-%m-%d")}.log',format='%(asctime)s %(message)s',filemode='a')
@@ -45,22 +45,28 @@ log.setLevel(logging.INFO)
 
 class updates():
     def __init__(self) -> None:
-        path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(path,"..")
-        print(f"Initializing repo at : {path}")
-        self.ginit = git.Repo(path)
-        log.info("Initialized repo. Prodceeding....")
-        print("Initialized Repo executing...")
-    
-    def set_git_path(self):
         try:
             with open('config.json') as file:
                 conf = json.loads(file)
+                path = conf['git_repo']
+                print(f"\033[44m Initializing repo at : {path} \033[40m")
+                print("\033[36m Initialized Repo executing... \033[37m")
+                self.ginit = git.Repo(path)
         except Exception as err:
-            print()
+            print(err)
+            log.error(f"Could not find the config file, error: {err}")
+            self.ginit = None
+            # path = os.path.abspath(os.path.dirname(__file__))
+            # path = os.path.join(path,"..")
+            
+            
 
     def pull_this(self):
         updated = False
+        if not self.ginit:
+            return False
+        else:
+            pass
         current = self.ginit.head.commit
         self.ginit.remotes.origin.pull()
         log.info("Attempting pull from repo...")
@@ -529,7 +535,7 @@ def main(cmdargs:list):
                 print("Month Data not found - \n enter flag like: py -m Attendbot.mark -m 8 -<ADDITional Flag>")
                 att = attendence()
         else:
-            print("Operation no supported. \n Enter flag like: \n py -m Attendbot.mark -m 8 -<ADDITional Flag>")
+            print("Operation not supported. \n Enter flag like: \n py -m Attendbot.mark -m 8 -<ADDITional Flag>")
     else:
         att = attendence()
 
@@ -553,12 +559,16 @@ if __name__=='__main__':
     print(cmdargs)
     if check:
         update = refresh.update('Attendbot')
-        print("\n","="*20)
-        print("*"*40)
-        print("The bot has just been updated")
-        print("Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> ")
-        print("#"*40)
+        print("\n","\033[34m=\033[37m"*40)
+        print("="*40,"\n")
+        print("\033[32m  The bot has just been updated \033[37m")
+        print("\033[32m  Please rerun the bot with: py -m Attendbot.mark -m 8 -<ADDITional Flag> \033[37m \n")
+        print("\033[34m#\033[37m"*40)
     else:
+        print("\033[41m Failed to update the Bot \033[40m \n")
+        print("\033[34m=\033[37m"*100)
+        print("\033[32m Bot will continue to run on the older build. \nThe devs are working to fix this! \nIn case the issue persists I recommend re-installing the Bot. \nAt: https://github.com/Mrunemployed/AttendBot-CG \033[37m \n")
+        print("\033[34m=\033[37m"*100)
         main(cmdargs)
     
  
