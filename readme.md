@@ -70,7 +70,7 @@ In case Git or any SCM is not installed [Click here](https://git-scm.com/downloa
 # Image Carousel
 
 <div style="position: relative; max-width: 600px; margin: auto; overflow: hidden;">
-    <div style="display: flex; transition: transform 0.5s ease-in-out;">
+    <div style="display: flex; animation: slide 10s infinite;">
         <img src="imgs/next1.png" style="width: 100%; flex-shrink: 0;">
         <img src="imgs/next2.png" style="width: 100%; flex-shrink: 0;">
         <img src="imgs/Next3.png" style="width: 100%; flex-shrink: 0;">
@@ -85,33 +85,14 @@ In case Git or any SCM is not installed [Click here](https://git-scm.com/downloa
         <img src="imgs/next12.png" style="width: 100%; flex-shrink: 0;">
         <img src="imgs/next13.png" style="width: 100%; flex-shrink: 0;">
     </div>
-    <button style="position: absolute; top: 50%; left: 10px; background-color: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer;" onclick="prevSlide()">&#10094;</button>
-    <button style="position: absolute; top: 50%; right: 10px; background-color: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer;" onclick="nextSlide()">&#10095;</button>
-</div>
-
-<script>
-let index = 0;
-
-function showSlide(i) {
-    const slides = document.querySelectorAll('div > img');
-    if (i >= slides.length) index = 0;
-    if (i < 0) index = slides.length - 1;
-    const offset = -index * 100;
-    slides[0].parentElement.style.transform = `translateX(${offset}%)`;
+<style>
+   @keyframes slide {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-100%); }
+    66% { transform: translateX(-200%); }
+    100% { transform: translateX(-300%); }
 }
-
-function nextSlide() {
-    index++;
-    showSlide(index);
-}
-
-function prevSlide() {
-    index--;
-    showSlide(index);
-}
-
-showSlide(index);
-</script>
+</style>
 
 
 >[!Note]
