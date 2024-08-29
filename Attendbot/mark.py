@@ -36,6 +36,7 @@ log = logging.getLogger()
 log.setLevel(logging.INFO)
 
 class updates():
+
     def __init__(self) -> None:
         path = None
         print(os.listdir())
@@ -125,8 +126,8 @@ class updates():
                 return False
             else:
                 log.info(f"uninstalled {name}....")
-                path = os.path.abspath(os.path.dirname(__file__))
-                path = os.path.join(path,"..")
+                path = git_path
+                # path = os.path.join(path,"..")
                 os.chdir(path=path)
                 
                 print("now trying to remove older builds...")
