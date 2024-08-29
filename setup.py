@@ -17,9 +17,9 @@ class setupconfig(install):
             pass
         else:
             config_file = os.path.join(self.install_lib, "Attendbot", "config.json")
-            config_content = {
-                "git_repo": git_path
-            }
+            config_content = dict()
+            config_content['git_repo'] = git_path
+
             with open(config_file, 'w') as cfg:
                 json.dump(config_content,cfg)
 
