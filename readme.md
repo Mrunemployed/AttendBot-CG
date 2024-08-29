@@ -62,10 +62,11 @@ This means `git` is correctly installed on your device.
 
 In case Git or any SCM is not installed [Click here](https://git-scm.com/download/win) to download **git**.
 - Now depending your version of windows select `64-bit` or `32-bit` accordingly.
-    ![Download Git](imgs/kdownload-git.png)
+
 - After the download has finished, follow the instructions and complete the installation.
-    ![Install Git](imgs/install-git.png)
+
 - For the detailed instructions please check the `imgs` folder it contains step-by-step instructions on how to install Git.
+
 - Now you're good to go!
 
 
