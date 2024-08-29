@@ -77,7 +77,7 @@ class updates():
         log.info("Attempting pull from repo...")
         if current != self.ginit.head.commit:
             log.info("Pulled changes from repo.")
-            print("new updates found!")
+            print("\033[42m new updates found! \033[40m")
             updated = True
         else:
             log.info("No new updates detected. Proceeding...")
