@@ -65,7 +65,7 @@ In case Git or any SCM is not installed [Click here](https://git-scm.com/downloa
 
 - After the download has finished, follow the instructions and complete the installation.
 
-- For the detailed instructions please check the `imgs` folder it contains step-by-step instructions on how to install Git.
+- For the detailed instructions please check the [`imgs`](https://github.com/Mrunemployed/AttendBot-CG/tree/main/imgs) folder it contains step-by-step instructions on how to install Git.
 
 - Now you're good to go!
 
