@@ -43,7 +43,7 @@ class updates():
         try:
             path = git_path
             print(f"\033[44m Initializing repo at : {path} \033[40m")
-            print("\033[36m Initialized Repo executing... \033[37m")
+            print("\033[36m Initialized Repo executing.... \033[37m")
             self.ginit = git.Repo(path)
         except Exception as err:
             print(err)
