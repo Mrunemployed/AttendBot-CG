@@ -22,7 +22,7 @@ class Bribe():
                         df.loc[i,"Mode"] = "ignore"
                     elif j["Attendance status"] == "PendingApproval":
                         df.loc[i,"Mode"] = "ignore"
-                    elif datetime.datetime.strptime(j["Date"],"%d-%b-%y") >= t:
+                    elif datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= t:
                     #type(df.loc[i,"Date"])!= float:
                         # if datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= datetime.datetime.now():
                         df.loc[i,"Mode"] = "ignore"
