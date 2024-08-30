@@ -406,8 +406,8 @@ class attendence(DataIn.Bribe):
                     else:
                         log.error(f"Encountered error at DataIn.Bribe.identify_changes  -> \\n {make_df}")
                         
-            make_df.to_csv(f"{completed}\\{datetime.datetime.now().month-1}-attendance-completion.csv",index=False)
-            self.cleanup(os.path.join(current_attendance,att_report[0]))
+            make_df.to_csv(f"{completed}\\{datetime.datetime.now().month}-attendance-completion.csv",index=False)
+            self.cleanup(os.path.join(current_attendance,att_report))
         else:
             log.setLevel(logging.ERROR)
             log.error(f"Encountered error at DataIn.Bribe.manipulate -> {make_df}")
