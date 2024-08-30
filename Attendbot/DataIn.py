@@ -11,16 +11,18 @@ class Bribe():
     def manipulate(self,df_path:os.PathLike):
         try:
             df = pd.read_csv(df_path)
+            t = datetime.datetime.now()
+            t = t.replace(hour=0,minute=0,second=0,microsecond=0)
             for i,j in df.iterrows():
-                if pd.notna(j["Rostered shift"]):
+                if pd.notna(j["Rostered shift"]) and j["Rostered shift"] != "NoValue":
                     if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
                         df.loc[i,"Mode"] = "ignore"
                     elif j["Attendance status"] == "PendingApproval":
                         df.loc[i,"Mode"] = "ignore"
-                    # elif not pd.isnull(j["Date"]) and datetime.datetime.strptime(j["Date"],"%d-%b-%y").month > datetime.datetime.now().month:
+                    elif datetime.datetime.strptime(j["Date"],"%d-%b-%y") >= t:
                     #type(df.loc[i,"Date"])!= float:
                         # if datetime.datetime.strptime(j["Date"],"%d-%b-%Y") >= datetime.datetime.now():
-                        # df.loc[i,"Mode"] = "ignore"
+                        df.loc[i,"Mode"] = "ignore"
                     else:
                         in_time = j["In Time"]
                         out_time = j["Out Time"]
