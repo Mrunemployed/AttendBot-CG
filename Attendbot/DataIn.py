@@ -13,9 +13,12 @@ class Bribe():
             df = pd.read_csv(df_path)
             t = datetime.datetime.now()
             t = t.replace(hour=0,minute=0,second=0,microsecond=0)
+            th = ["Attended shift","Attendance shift","Attendence shift"]
+            th_ = [x for x in df.columns if x in th][0]
+
             for i,j in df.iterrows():
                 if pd.notna(j["Rostered shift"]) and j["Rostered shift"] != "NoValue":
-                    if (j["Rostered shift"] in ["PH","WO"] ) | (j["Attendance shift"] == "Leave"):
+                    if (j["Rostered shift"] in ["PH","WO"] ) | (j[th_] in ["Leave","Holiday"]) :
                         df.loc[i,"Mode"] = "ignore"
                     elif j["Attendance status"] == "PendingApproval":
                         df.loc[i,"Mode"] = "ignore"

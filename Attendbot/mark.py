@@ -411,6 +411,7 @@ class attendence(DataIn.Bribe):
         else:
             log.setLevel(logging.ERROR)
             log.error(f"Encountered error at DataIn.Bribe.manipulate -> {make_df}")
+            print("Error while trying to run the logic engine on fetched attendence data...")
 
     
     #Applies attendence as swipe adjustment or Manual attendance
