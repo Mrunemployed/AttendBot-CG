@@ -65,4 +65,3 @@ class Bribe():
 # df = pd.read_csv("sample.csv")
 # br = Bribe()
 # c = br.manipulate(df)
-# print(c)
