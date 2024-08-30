@@ -40,8 +40,8 @@ if not os.path.exists(current_attendance):
 # print("Find attendance reports at:",current_attendance)
 
 completed = os.path.join(path,"completed")
-if not os.path.exists(current_attendance):
-    os.mkdir(current_attendance)
+if not os.path.exists(completed):
+    os.mkdir(completed)
     flag = True
 print("\033[36m Find attendance reports at:",completed,"\033[37m \n")
 
