@@ -1,8 +1,13 @@
 # Attendbot 🤖
 
+**The installable package of Attendbot**
+
 <!-- ![Attendbot Logo](https://via.placeholder.com/150) -->
 
 ---
+>[!Note]
+> This is the installable package to get everything up and running. If you are looking for instructions on how to download and use Attendbot, I recommend [check this out](https://github.com/Mrunemployed/AttendBot-CG/tree/main)
+
 
 ## What is Attendbot?
 
@@ -27,62 +32,9 @@ Attendbot is a powerful automation tool designed to simplify the process of subm
 ---
 
 
-
-## Installation (Windows)
-
-> [!NOTE]
-> If you dont have python installed, you may download [Python here](https://www.python.org/downloads/).
-
-
----
-
-### Requirements
-- Python 3.10 or higher
-
-
-> [!TIP] 
-> ##### Not sure whether you have python? Perform the following steps.
-
-
-```
-py --version
-```
- or
-
-```
-python --version
-```
-
- Should return a response like:
-
-```
-Python 3.11.4
-```
-
-
-### Instructions
-
->[!NOTE] 
->You need to have python already installed in order to use this bot.
-
-1. **Cloning** the Git repositiory :
-    - Copy the *URL* of this repository 
-
-1. Open Command Prompt.
-2. Navigate to the directory containing the Attendbot package.
-3. Run the following command to install Attendbot:
-    
-    ```bash
-
-    py -m pip install .
-    
-    ```
-
----
-
 ## Usage
 
-### Running the Program
+### Running Attendbot
 1. Open Command Prompt.
 2. Run the following command to mark attendance for the previous month:
    
@@ -97,11 +49,9 @@ Python 3.11.4
 To run the program in interactive mode (displaying the browser window), use the -i flag:
 
 ```bash
-
 py -m Attendbot.mark -i
 
 ```
-
 
 ### Specifying Month
 To specify the month for which attendance needs to be applied, use the -m flag followed by the month value (integer):
@@ -127,7 +77,7 @@ Or, you can use both the flags in conjunction:
 
 ```
 
-py -m Attendbot.mark -m 6 -i
+py -m Attendbot.mark -i -m6
 
 ```
 
